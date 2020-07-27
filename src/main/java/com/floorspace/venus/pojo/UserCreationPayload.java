@@ -2,27 +2,18 @@ package com.floorspace.venus.pojo;
 
 import java.util.UUID;
 
-public class UserCreationPayload {
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-	private String userName;
-	private String mobileNumber;
-	
-	public UserCreationPayload(String userName, String mobileNumber) {
-		this.userName = userName;
-		this.mobileNumber = mobileNumber;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UserCreationPayload extends PIIUserInfo {
+
+	public UserCreationPayload() {
+		super();
 	}
-	
-	public String getUserName() {
-		return userName;
+	public UserCreationPayload(UUID userID, String fullName, Integer registrationDate, String mobileNumber, String emailID,
+			String panNumber, String aadharNumber) {
+		super(userID, fullName, registrationDate, mobileNumber, emailID, panNumber, aadharNumber);
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public String getMobileNumber() {
-		return mobileNumber;
-	}
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
-	
 }
+	

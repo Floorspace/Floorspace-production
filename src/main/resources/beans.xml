@@ -12,30 +12,27 @@
   <context:annotation-config />
 	<context:component-scan base-package="com.floorspace.venus.endpoint" /> 
   
-  
   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
 	<property name="url" value="jdbc:mysql://localhost/easypay_prod?useSSL=false" />  
 	<property name="username" value="tarun" />  
 	<property name="password" value="tarun" />  
 	</bean> 
-  
- <bean id = "paymentManager" class = "com.floorspace.venus.manager.PaymentsManager">
-	<constructor-arg name = "paymentsDao" ref = "paymentsDao"/>
+
+	 <bean id = "infoManager" class = "com.floorspace.venus.manager.UserInfoManager">
+	<constructor-arg name = "piiUserInfoDao" ref = "piiUserInfoDao"/>
 	</bean>
 	
-	 <bean id = "infoManager" class = "com.floorspace.venus.manager.InfoManager">
-	<constructor-arg name = "userInfoDao" ref = "userInfoDao"/>
+	<bean id = "piiUserInfoDao" class = "com.floorspace.venus.dao.PIIUserInfoDao">
+	<constructor-arg name = "dataSource" ref = "dataSource"/>
 	</bean>
 	
-	<bean id = "paymentsDao" class = "com.floorspace.venus.dao.PaymentsDao">
+		<bean id = "paymentsDao" class = "com.floorspace.venus.dao.PaymentsDao">
 	<constructor-arg name = "dataSource" ref = "dataSource"/>
 	</bean>	
 	
-	<bean id = "userInfoDao" class = "com.floorspace.venus.dao.UserInfoDao">
-	<constructor-arg name = "dataSource" ref = "dataSource"/>
+	<bean id = "paymentManager" class = "com.floorspace.venus.manager.PaymentsManager">
+	<constructor-arg name = "paymentsDao" ref = "paymentsDao"/>
 	</bean>
-	
-	
 	   
 
 </beans>

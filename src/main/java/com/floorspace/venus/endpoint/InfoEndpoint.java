@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -15,20 +16,20 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.floorspace.venus.manager.InfoManager;
+import com.floorspace.venus.manager.UserInfoManager;
 import com.floorspace.venus.pojo.UserCreationPayload;
-import com.floorspace.venus.pojo.UserInfo;
 import com.floorspace.venus.pojo.InfoCreationResponse;
+import com.floorspace.venus.pojo.PIIUserInfo;
 
 
 @Component
 @Path("v1.0/meta")
 public class InfoEndpoint {
 
-	private InfoManager infoManager;
+	private UserInfoManager infoManager;
 	
 	@Autowired
-	 public InfoEndpoint(InfoManager infoManager) {
+	 public InfoEndpoint(UserInfoManager infoManager) {
 		 this.infoManager = infoManager;
 	 }
 		
@@ -37,8 +38,22 @@ public class InfoEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/user/{userID}")
 	public Response getUserInfo(@PathParam("userID") UUID userID) {
-		UserInfo userInfo = infoManager.getUserInfo(userID);
+		PIIUserInfo userInfo = infoManager.getUserInfo(userID);
 		return Response.ok(userInfo).build();
+	}
+	
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/user")
+	public Response addUserDetails(UserCreationPayload payload) {
+		InfoCreationResponse resp = infoManager.createUser(payload);
+		if(resp.isUserCreated()) {
+			PIIUserInfo userInfo = infoManager.getUserInfo(resp.getUuid());
+			return Response.ok(userInfo).build();
+		}
+		return Response.notModified().build();
 	}
 	
 	
@@ -46,13 +61,10 @@ public class InfoEndpoint {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/user")
-	public Response addUserDetails(UserCreationPayload payload) {
-		InfoCreationResponse resp = infoManager.createUser(payload);
-		if(resp.isUserCreated()) {
-			UserInfo userInfo = infoManager.getUserInfo(resp.getUuid());
-			return Response.ok(userInfo).build();
-		}
-		return Response.notModified().build();
+	public Response updateUserDetails(UserCreationPayload payload) {
+		infoManager.updateUser(payload);
+		PIIUserInfo userInfo = infoManager.getUserInfo(payload.getUserID());
+		return Response.ok(userInfo).build();
 	}
 	
 	
