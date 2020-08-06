@@ -18,21 +18,23 @@
 	<property name="password" value="tarun" />  
 	</bean> 
 
-	 <bean id = "infoManager" class = "com.floorspace.venus.manager.UserInfoManager">
-	<constructor-arg name = "piiUserInfoDao" ref = "piiUserInfoDao"/>
+	 <bean id = "userManager" class = "com.floorspace.venus.manager.UserManager">
+	<constructor-arg name = "userDao" ref = "userDao"/>
 	</bean>
 	
-	<bean id = "piiUserInfoDao" class = "com.floorspace.venus.dao.PIIUserInfoDao">
+	<bean id = "userDao" class = "com.floorspace.venus.dao.UserDao">
 	<constructor-arg name = "dataSource" ref = "dataSource"/>
 	</bean>
 	
-		<bean id = "paymentsDao" class = "com.floorspace.venus.dao.PaymentsDao">
-	<constructor-arg name = "dataSource" ref = "dataSource"/>
-	</bean>	
-	
-	<bean id = "paymentManager" class = "com.floorspace.venus.manager.PaymentsManager">
-	<constructor-arg name = "paymentsDao" ref = "paymentsDao"/>
+	<bean id = "adPoolManager" class = "com.floorspace.venus.manager.FloorSpacesAdPoolManager">
+	<constructor-arg name = "floorspacesAdPoolDao" ref = "floorspacesAdPoolDao"/>
+	<constructor-arg name = "userManager" ref = "userManager"/>
 	</bean>
-	   
+	
+	<bean id = "floorspacesAdPoolDao" class = "com.floorspace.venus.dao.FloorspacesAdPoolDao">
+	<constructor-arg name = "dataSource" ref = "dataSource"/>
+	</bean>
+	
+			   
 
 </beans>

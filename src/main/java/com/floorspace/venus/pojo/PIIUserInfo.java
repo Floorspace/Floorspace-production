@@ -20,6 +20,11 @@ public class PIIUserInfo {
 	private String panNumber;
 	private String aadharNumber;
 	
+//	private String DOB;
+//	private String jobName;
+//	private String companyName;
+//	private UserType userType; -> Buyer or Lender
+	
 	public PIIUserInfo(UUID userID, String fullName, Integer registrationDate, String mobileNumber, String emailID,
 			String panNumber, String aadharNumber) {
 		this.userID = userID;
