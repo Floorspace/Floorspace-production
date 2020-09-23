@@ -1,12 +1,6 @@
-Micro services:
+# Floorspace-production
 
-1.Personalisation of similar people, similar types of properties they wanna build etc..
-2.Connecting lenders and buyers(Core product)
-3.Legal checkup
-4.Legal help
-5.Bank loans
-6.Land registration
-7.Artichect plan
-8.Find builder
-9.Interior design
-10.Flat selling and rentals
+Tested backed system for Floorspace:
+
+Floorspace Backend is built using Java. Flask is used to connect to these APIs and show in the website. 
+This code is production ready and the generated war file can be deployed in a server like Tomcat.
